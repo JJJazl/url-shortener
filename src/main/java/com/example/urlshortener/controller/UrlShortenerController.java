@@ -2,6 +2,7 @@ package com.example.urlshortener.controller;
 
 import com.example.urlshortener.ShortenerService;
 import com.example.urlshortener.model.UrlModel;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
@@ -27,8 +28,11 @@ public class UrlShortenerController {
     }
 
     @GetMapping
-    public void getShortUrl(@PathVariable String shortUrl) {
-
+    public ResponseEntity<?> getShortUrl(@PathVariable String shortUrl) {
+        var originalUrl = service.getOriginalUrl(shortUrl);
+        return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
+                .header("location", originalUrl)
+                .build();
     }
 
 }
