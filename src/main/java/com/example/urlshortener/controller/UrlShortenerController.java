@@ -27,7 +27,7 @@ public class UrlShortenerController {
 
     }
 
-    @GetMapping
+    @GetMapping("/{shortUrl}")
     public ResponseEntity<?> getShortUrl(@PathVariable String shortUrl) {
         var originalUrl = service.getOriginalUrl(shortUrl);
         return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
