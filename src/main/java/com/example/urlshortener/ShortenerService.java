@@ -16,7 +16,7 @@ public class ShortenerService {
         String shortUrl = RandomStringUtils.randomAlphabetic(5);
         BoboUrl boboUrl = new BoboUrl();
         boboUrl.setUrl(urlModel.getUrl());
-        boboUrl.setKey(urlModel.getKey());
+        boboUrl.setKey(shortUrl);
 
         shortenerRepository.save(boboUrl);
 

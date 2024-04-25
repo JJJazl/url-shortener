@@ -18,6 +18,7 @@ public class UrlShortenerController {
     }
 
     @PostMapping
+    @CrossOrigin(origins = "*")
     public ResponseEntity<String> acceptLongUrl(@RequestBody UrlModel urlModel) {
         String responseUrl = ServletUriComponentsBuilder.fromCurrentRequest()
                 .path(service.createShortUrl(urlModel))
@@ -28,6 +29,7 @@ public class UrlShortenerController {
     }
 
     @GetMapping("/{shortUrl}")
+    @CrossOrigin(origins = "*")
     public ResponseEntity<?> getShortUrl(@PathVariable String shortUrl) {
         var originalUrl = service.getOriginalUrl(shortUrl);
         return ResponseEntity.status(HttpStatus.MOVED_PERMANENTLY)
