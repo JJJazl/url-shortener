@@ -21,8 +21,7 @@ public class UrlShortenerController {
     @CrossOrigin(origins = "*")
     public ResponseEntity<String> acceptLongUrl(@RequestBody UrlModel urlModel) {
         String responseUrl = ServletUriComponentsBuilder.fromCurrentRequest()
-                .path(service.createShortUrl(urlModel))
-                .buildAndExpand()
+                .buildAndExpand(service.createShortUrl(urlModel))
                 .toString();
         return ResponseEntity.ok(responseUrl);
 
