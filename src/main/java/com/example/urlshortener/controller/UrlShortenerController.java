@@ -4,6 +4,7 @@ import com.example.urlshortener.ShortenerService;
 import com.example.urlshortener.model.UrlModel;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 @RestController
 @RequestMapping("/api/v1/shortener")
@@ -17,7 +18,11 @@ public class UrlShortenerController {
 
     @PostMapping
     public ResponseEntity<String> acceptLongUrl(@RequestBody UrlModel urlModel) {
-        return ResponseEntity.ok(service.createShortUrl(urlModel));
+        String responseUrl = ServletUriComponentsBuilder.fromCurrentRequest()
+                .path(service.createShortUrl(urlModel))
+                .buildAndExpand()
+                .toString();
+        return ResponseEntity.ok(responseUrl);
 
     }
 

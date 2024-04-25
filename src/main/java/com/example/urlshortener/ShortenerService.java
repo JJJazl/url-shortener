@@ -24,8 +24,8 @@ public class ShortenerService {
     }
 
     public String getOriginalUrl(String shortUrl) {
-//        shortenerRepository.findByShortUrl(shortUrl)
-//                .orElseThrow();
-        return null;
+        return shortenerRepository.findByKey(shortUrl)
+                .map(BoboUrl::getUrl)
+                .orElseThrow();
     }
 }
