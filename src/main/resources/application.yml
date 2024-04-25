@@ -11,13 +11,4 @@ spring:
       ddl-auto: none
     properties:
       hibernate:
-        show_sql: false
-        format_sql: false
         default_schema: bobo_short_url
-        generate_statistics: false
-        jdbc:
-          batch_size: 100
-        order_updates: true
-        order_inserts: true
-  flyway:
-    enabled: true
