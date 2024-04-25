@@ -4,6 +4,7 @@
 <div>
     <input id="typed_text" type="url" placeholder="type text">
     <button id="send_data" onclick="shortUrl()">send</button>
+    <span id="result_data"></span>
 </div>
 </body>
 
@@ -12,20 +13,38 @@
     shortUrl = () => {
         const url = "http://localhost:8080/api/v1/shortener";
         var foundText = document.getElementById("typed_text").value;
-        var data = document.getElementById("send_data");
+        var dataToSend = prepareObjectToSend(foundText);
 
-        var data_to_send = {
-            "url": foundText
+        fetch(url, buildRequest(dataToSend))
+            .then(data => data.text())
+            .then(dataAsText => addResultToElement(dataAsText))
+            .catch(reason => console.log('Error: ' + reason));
+    }
+
+    addResultToElement = (dataAsText) => {
+        var span = document.getElementById('result');
+        while (span.firstChild) {
+            span.removeChild(span.firstChild);
         }
+        span.appendChild(document.createTextNode(dataAsText));
+    }
 
-        fetch(url, {
+    buildRequest = (dataToSend) => {
+        return {
             method: "POST",
             headers: {
                 "Content-type": "application/json; charset=UTF-8"
             },
-            body: data_to_send})
-            .then()
+            body: dataToSend
+        }
     }
 
+    prepareObjectToSend = (foundText) => {
+        var objectToSend = {
+            "url": foundText
+        }
+
+        return JSON.stringify(objectToSend);
+    }
 </script>
 </html>
